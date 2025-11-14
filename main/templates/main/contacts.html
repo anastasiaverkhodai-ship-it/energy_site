@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Контакти — Альтерхол</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background:#f4f4f8; color:#2d2d2d; font-family: 'Segoe UI', sans-serif; }
+    .navbar { background:#4b2e83 !important; }
+    .navbar .nav-link, .navbar .navbar-brand { color:#fff !important; }
+    .container h1, .container h2 { color:#4b2e83; font-weight: 700; margin-bottom: 1rem; }
+    .form-control:focus { box-shadow:none; border-color:#4b2e83; }
+    .btn-primary { background:#4b2e83; border:none; transition: all 0.3s; }
+    .btn-primary:hover { background:#3a2370; transform: translateY(-2px); }
+    .contact-card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .contact-info p { margin-bottom: 0.5rem; }
+    a.no-underline { text-decoration:none; color:#4b2e83; transition: color 0.3s; }
+    a.no-underline:hover { color:#7c4df0; }
+    .btn-gradient {
+      background: linear-gradient(90deg, #4b2e83 0%, #7c4df0 100%);
+      color: #fff;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .btn-gradient:hover {
+      background: linear-gradient(90deg, #3a2370 0%, #5c2ecc 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(75,46,131,0.4);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'home' %}">Альтерхол</a>
+  </div>
+</nav>
+
+<div class="container py-5">
+
+  <div class="contact-card">
+    <h1>Наші контакти</h1>
+    <div class="contact-info">
+      <p><b>Адреса:</b> проспект В'ячеслава Чорновола, 43, Львів</p>
+      <p><b>Email:</b> <a href="mailto:info@alterhol.com.ua" class="no-underline">info@alterhol.com.ua</a></p>
+      <p><b>Телефон:</b> +380 (32) 123-45-67</p>
+      <p><b>Для повідомлень про загрозу електробезпеки:</b> +38 (068) 247-7-247</p>
+      <p><b>Кол-центр ПрАТ «Львівобленерго»:</b> 0 800 50 15 68</p>
+      <p><b>Швидка медична допомога:</b> 103</p>
+      <p><b>Служба порятунку:</b> 101</p>
+      <p><b>Поліція:</b> 102</p>
+    </div>
+  </div>
+
+  <!-- Google Map -->
+  <div class="mb-5" style="width:100%;height:400px;">
+    <iframe 
+      src="https://www.google.com/maps?q=проспект%20В'ячеслава%20Чорновола%2043%20Львів&output=embed" 
+      width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+
+  <!-- Порядок звернень -->
+  <div class="contact-card">
+    <h2>Порядок подання звернень, скарг та повідомлень</h2>
+    <p>Відповідно до порядку, усі звернення, скарги та претензії споживачів стосовно якості постачання електричної енергії та повідомлення про загрозу електробезпеки мають бути оформлені у письмовій або електронній формі та надані особисто або поштовим зв`язком на адресу:</p>
+    <p>Приватне підприємство «Альтерхол»<br>
+    79020, Львівська область, м. Львів, просп. В’ячеслава Чорновола, 43А<br>
+    Графік роботи: пн.-пт з 08:00 до 17:00, сб, нд – вихідні дні<br>
+    Електронна пошта: <a href="mailto:alterhol@ukr.net" class="no-underline">alterhol@ukr.net</a></p>
+    <p>Телефон для консультацій: +38 (068) 247-7-247</p>
+    <p>Отримані звернення, скарги та повідомлення розглядаються у строки, встановлені Правилами користування електричною енергією та чинним законодавством України.</p>
+
+    <h3>Контакти регуляторів:</h3>
+    <p><b>НКРЕКП</b><br>
+    03057 м. Київ, вул. Смоленська, 19<br>
+    <a href="http://www.nerc.gov.ua" target="_blank" class="no-underline">www.nerc.gov.ua</a><br>
+    Email: <a href="mailto:public.info@nerc.gov.ua" class="no-underline">public.info@nerc.gov.ua</a><br>
+    Тел.: (044) 204-48-27, 204-48-94<br>
+    Факс: (044) 277-30-47</p>
+
+    <p><b>Міністерство енергетики та вугільної промисловості України</b><br>
+    01601 Київ, вул. Хрещатик, 30<br>
+    <a href="http://mpe.kmu.gov.ua" target="_blank" class="no-underline">mpe.kmu.gov.ua</a><br>
+    Email: <a href="mailto:kanc@mev.gov.ua" class="no-underline">kanc@mev.gov.ua</a><br>
+    Тел.: (044) 594-66-05, (044) 531-36-89 (8:30-17:30)</p>
+  </div>
+
+  <!-- Форма запитання -->
+  <div class="contact-card">
+    <h2>Задати питання</h2>
+    <form method="post" action="{% url 'contacts' %}">
+      {% csrf_token %}
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Ім’я" required>
+        <label for="name">Ім’я</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Email" required>
+        <label for="email">Email</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control form-control-lg" id="subject" name="subject" placeholder="Тема" required>
+        <label for="subject">Тема</label>
+      </div>
+      <div class="form-floating mb-3">
+        <textarea class="form-control form-control-lg" id="message" name="message" placeholder="Повідомлення" style="height:150px" required></textarea>
+        <label for="message">Повідомлення</label>
+      </div>
+      <button type="submit" class="btn btn-gradient w-100 py-2 fs-5">Відправити</button>
+    </form>
+  </div>
+
+  <footer class="text-center py-4">
+    <p>© Альтерхол - 2025</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

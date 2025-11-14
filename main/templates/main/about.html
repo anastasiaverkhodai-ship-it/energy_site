@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Про нас | Альтерхол{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <h1 class="section-title text-center mb-4" data-aos="fade-up">Про нас</h1>
+  <p class="lead text-center" data-aos="fade-up" data-aos-delay="100">
+      Приватне підприємство «Альтерхол», член Оптового Ринку електроенергії України з 2016 року, здійснює постачання електричної енергії по всій Україні.
+  </p>
+  <p class="text-center" data-aos="fade-up" data-aos-delay="200">
+      Підприємство уклало договори з ДП «Оператор ринку» №81/01 від 28.06.2019 та ПрАТ «НЕК «Укренерго» №0102-02024 від 01.01.2019.
+  </p>
+
+  <!-- Інформація про юридичну особу -->
+  <h2 class="section-title mt-5 text-center" data-aos="fade-up">Юридична інформація</h2>
+  <div class="table-responsive my-4" data-aos="fade-up" data-aos-delay="100">
+      <table class="table table-dark table-striped table-bordered align-middle">
+          <tbody>
+              <tr><th>Ідентифікаційний код</th><td>40300844</td></tr>
+              <tr><th>Повне найменування</th><td>Приватне підприємство «Альтерхол»</td></tr>
+              <tr><th>Скорочене найменування</th><td>ПП «Альтерхол»</td></tr>
+              <tr><th>Юридична адреса</th><td>79020, Львів, просп. В. Чорновола, 43А</td></tr>
+              <tr><th>Керівник</th><td>Крет Володимир Васильович</td></tr>
+              <tr><th>Посада</th><td>Директор</td></tr>
+              <tr><th>Дата реєстрації</th><td>25.02.2016</td></tr>
+              <tr><th>КВЕД</th><td>35.14 — Торгівля електроенергією</td></tr>
+              <tr><th>Телефон</th><td>+38 (068) 247-7-247</td></tr>
+              <tr><th>Email</th><td>alterhol@ukr.net</td></tr>
+          </tbody>
+      </table>
+  </div>
+
+</div>
+<style>
+.doc-card {
+  background: rgba(26,10,56,0.85);
+  border-radius: 15px;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.doc-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px var(--violet-2), 0 0 35px var(--violet-3);
+}
+.text-violet { color: var(--violet-2); }
+</style>
+
+{% endblock %}

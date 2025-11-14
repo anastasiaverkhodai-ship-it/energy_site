@@ -1,0 +1,95 @@
+{% extends 'main/base.html' %}
+
+{% block title %}З нами надійно | Альтерхол{% endblock %}
+
+{% block content %}
+<div class="dark-bg py-5">
+
+  <!-- Заголовок -->
+  <h1 class="section-title text-center mb-5 text-light" data-aos="fade-down">З нами надійно</h1>
+  <p class="text-center mb-5 fs-5 text-light" data-aos="fade-up" data-aos-delay="100">
+    Ми є діючим членом Оптового Ринку електричної енергії України, з нами рахуються, до нас прислухаються.
+  </p>
+
+  <!-- Картки з інформацією -->
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="feature-box dark-card">
+          <i class="fas fa-handshake"></i>
+          <h5>НАМ ДОВІРЯЮТЬ</h5>
+          <p>Клієнтами нашої компанії є великі підприємства галузей харчування, аграрного сектору, ПЕК, легкої промисловості.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="feature-box dark-card">
+          <i class="fas fa-shield-alt"></i>
+          <h5>НАДІЙНІСТЬ</h5>
+          <p>У відносинах з партнерами наша Компанія завжди ставила на перше місце поняття надійності, стабільності і взаємної довіри.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-box dark-card">
+          <i class="fas fa-user-tie"></i>
+          <h5>ПРОФЕСІОНАЛІЗМ</h5>
+          <p>Розуміння системи комплексного функціонування ринку електроенергії - це можливість знайти оптимальне рішення для будь-якої проблеми.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+      <div class="col-md-4 offset-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="feature-box dark-card">
+          <i class="fas fa-lightbulb"></i>
+          <h5>ІННОВАЦІЇ</h5>
+          <p>Ми завжди прагнемо розвитку та змінюємось відповідно до зміни кон’юктури ринку.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+</div>
+
+<style>
+/* Темний градієнт фону */
+.dark-bg {
+  background: linear-gradient(135deg, #1a0a38, #2c0f5c, #3b1870, #2c0f5c);
+  background-size: 400% 400%;
+  animation: gradientAnim 20s ease infinite;
+  border-radius: 15px;
+  padding: 50px 0;
+}
+@keyframes gradientAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Темні картки */
+.dark-card {
+  background: rgba(34, 8, 64, 0.85);
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  color: #f1f1f1;
+  box-shadow: 0 0 10px rgba(111,50,180,0.4), 0 0 15px rgba(155,48,255,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.dark-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(111,50,180,0.6), 0 0 25px rgba(155,48,255,0.5);
+}
+.dark-card i {
+  font-size: 40px;
+  margin-bottom: 12px;
+  color: #b266ff;
+}
+</style>
+
+<script>
+AOS.init({ duration: 1000, once: true });
+</script>
+{% endblock %}

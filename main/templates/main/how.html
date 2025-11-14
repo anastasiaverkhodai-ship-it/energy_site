@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Як це працює | Альтерхол{% endblock %}
+
+{% block content %}
+<div class="dark-bg py-5">
+
+  <!-- Заголовок -->
+  <h1 class="section-title text-center mb-5 text-light" data-aos="fade-down">Як це працює</h1>
+
+  <!-- Кроки -->
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up">
+        <div class="step-card dark-card">
+          <div class="emoji">🔌</div>
+          <h5>Крок 1</h5>
+          <p>Електропостачальна компанія має укладений з АТ «Оператор ринку» Договір про участь на «Ринку доба наперед» і «Внутрішньодобовому ринку».</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+        <div class="step-card dark-card">
+          <div class="emoji">📝</div>
+          <h5>Крок 2</h5>
+          <p>Електропостачальна компанія укладає з Оператором системи розподілу Договір «Постачальника на розподіл електроенергії», а також Договір з оператором системи передачі ПрАТ «НЕК «Укренерго» «Про врегулювання небалансів електричної енергії».</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-card dark-card">
+          <div class="emoji">👥</div>
+          <h5>Крок 3</h5>
+          <p>Електропостачальник укладає Договір із Споживачем.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="450">
+        <div class="step-card dark-card">
+          <div class="emoji">🚀</div>
+          <h5>Крок 4</h5>
+          <p>Наш Клієнт отримує вигоду від співпраці з нашим підприємством.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+</div>
+
+<style>
+.dark-bg {
+  background: linear-gradient(135deg, #1a0a38, #2c0f5c, #3b1870, #2c0f5c);
+  background-size: 400% 400%;
+  animation: gradientAnim 20s ease infinite;
+  border-radius: 15px;
+  padding: 50px 0;
+}
+@keyframes gradientAnim {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.dark-card {
+  background: rgba(34, 8, 64, 0.85);
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  color: #f1f1f1;
+  box-shadow: 0 0 10px rgba(111,50,180,0.4), 0 0 15px rgba(155,48,255,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.dark-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px rgba(111,50,180,0.6), 0 0 25px rgba(155,48,255,0.5);
+}
+.dark-card .emoji {
+  font-size: 40px;
+  margin-bottom: 12px;
+  transition: transform 0.3s;
+}
+.dark-card:hover .emoji {
+  transform: scale(1.2);
+}
+</style>
+
+<script>
+AOS.init({ duration: 1000, once: true });
+</script>
+{% endblock %}
