@@ -62,13 +62,11 @@ def tariffs_view(request):
         "doc_2021": doc_2021
     })
 def appeals(request):
-    # Беремо тестовий документ
     document = None
     try:
-        document = Document.objects.get(
-            title="Інформація щодо дотримання загальних та гарантованих стандартів якості надання послуг за 2018 рік"
-        )
-    except Document.DoesNotExist:
+        document = Document.objects.filter(
+            title__icontains="2018"
+        ).first()
+    except:
         pass
-
     return render(request, 'main/appeals.html', {'document': document})
