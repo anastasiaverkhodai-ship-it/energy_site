@@ -50,11 +50,7 @@ def complaints(request):
 def documentation_overview(request):
     return render(request, 'main/documentation_overview.html')
 def appeals(request):
-    document = Document.objects.get(
-        title="Інформація щодо дотримання загальних та гарантованих стандартів якості надання послуг за 2018 рік"
-    )
-    return render(request, 'main/appeals.html', {"document": document})
-
+    return render(request, 'main/appeals.html')
 from django.shortcuts import render, get_object_or_404
 from .models import TariffDocument
 
