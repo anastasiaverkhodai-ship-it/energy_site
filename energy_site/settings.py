@@ -127,11 +127,13 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files (Cloudinary)
-MEDIA_URL = '/media/'
+MEDIA_URL = '/'
+
 
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dm4dhfqmk', 
