@@ -10,3 +10,5 @@ platformdirs==4.3.7
 setuptools==77.0.3
 sqlparse==0.5.3
 virtualenv==20.29.3
+django-cloudinary-storage
+cloudinary
