@@ -33,10 +33,10 @@ INSTALLED_APPS = [
 
     'main',
     'accounts',
-
-    # Cloudinary MUST be added like this:
+# ... інші додатки
     'cloudinary',
-    'cloudinary_storage',
+    'cloudinary_storage', # Для використання в якості сховища
+    # ...
 ]
 
 # ----------------------
@@ -118,15 +118,14 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# YOUR CLOUDINARY SETTINGS (correct)
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dm4dhfqmk',
-    'API_KEY': '544226813353368',
-    'API_SECRET': 'JH887nTIkxZkBuUU9g5g3CYqMJI',
-}
+#import os
 
-# *** ABSOLUTELY CRITICAL ***
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Конфігурація Cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('dm4dhfqmk'),
+    'API_KEY': os.environ.get('544226813353368'),
+    'API_SECRET': os.environ.get('JH887nTIkxZkBuUU9g5g3CYqMJI')
+}
 
 # ----------------------
 # AUTH / MISC
@@ -135,7 +134,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 
 
-
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    # Статичні файли (CSS/JS) залиште за замовчуванням або налаштуйте Whitenoise/інше
+    # "staticfiles": {
+    #     "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    # },
+}
 
 
 # Default primary key field type
