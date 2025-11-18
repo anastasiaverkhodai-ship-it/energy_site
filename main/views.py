@@ -64,11 +64,14 @@ def tariffs_view(request):
 def appeals(request):
     document = None
     try:
-       document = Document.objects.filter(
-    title__regex=r".*2018.*"
-).first()
-
-
+        document = Document.objects.filter(
+            title="Інформація щодо дотримання загальних та гарантованих стандартів якості надання послуг за 2018 рік"
+        ).first()
     except:
         pass
+
     return render(request, 'main/appeals.html', {'document': document})
+
+
+
+  
