@@ -127,6 +127,9 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('JH887nTIkxZkBuUU9g5g3CYqMJI')
 }
 
+# *** ABSOLUTELY CRITICAL ***
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # ----------------------
 # AUTH / MISC
 # ----------------------
@@ -134,15 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 
 
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    # Статичні файли (CSS/JS) залиште за замовчуванням або налаштуйте Whitenoise/інше
-    # "staticfiles": {
-    #     "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    # },
-}
+
 
 
 # Default primary key field type
