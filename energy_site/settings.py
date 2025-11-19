@@ -28,15 +28,13 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'cloudinary',
+    'cloudinary_storage'
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'main',
     'accounts',
-# ... інші додатки
-    'cloudinary',
-    'cloudinary_storage', # Для використання в якості сховища
-    # ...
+
 ]
 
 # ----------------------
