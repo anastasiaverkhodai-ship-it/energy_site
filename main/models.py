@@ -1,23 +1,21 @@
 from django.db import models
-# from cloudinary.models import CloudinaryField # Альтернатива
+from pyuploadcare.dj.models import FileField   # важливо!
 
 class Document(models.Model):
     title = models.CharField(max_length=255)
-    file = models.FileField(upload_to='docs/')
+    file = FileField()   # Uploadcare зберігає файл у хмарі
 
     def __str__(self):
         return self.title
 
 
-
-from django.db import models
-
 class TariffDocument(models.Model):
     year = models.IntegerField()
     name = models.CharField(max_length=255)
-    file = models.FileField(upload_to='docs/')  # тепер файл лежить у media/docs/
+    file = FileField()   # також через Uploadcare
 
     def __str__(self):
         return f"{self.name} ({self.year})"
+
 
 

@@ -7,6 +7,7 @@ gunicorn==23.0.0
 packaging==24.2
 pipenv==2024.4.1
 platformdirs==4.3.7
+pyuploadcare
 setuptools==77.0.3
 sqlparse==0.5.3
 virtualenv==20.29.3

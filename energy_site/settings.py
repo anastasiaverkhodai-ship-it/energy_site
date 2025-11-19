@@ -130,5 +130,7 @@ LOGIN_URL = '/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 
+UPLOADCARE_PUBLIC_KEY = "36a3b067e0bb8abe769c"
+UPLOADCARE_SECRET_KEY = "8b7e2b4a12c7d8530cbd"  # він є у твоєму акаунті Uploadcare
 
 
