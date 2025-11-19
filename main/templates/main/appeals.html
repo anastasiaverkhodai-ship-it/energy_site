@@ -146,17 +146,12 @@
 
     <p><strong>Інформація щодо дотримання загальних та гарантованих стандартів якості надання послуг:</strong></p>
 
-{% if document %}
-    <ul>
-        <li>
-            <a href="{{ document.file.url }}" target="_blank" class="pdf-link">
-                {{ document.title }}
-            </a>
-        </li>
-    </ul>
+{{% if document %}
+    <a href="{{ document.file.cdn_url }}" target="_blank">
+        {{ document.title }}
+    </a>
 {% else %}
-    <p>Документ не знайдено
-    </p>
+    <p>Документ не завантажений.</p>
 {% endif %}
 
 
