@@ -60,14 +60,6 @@ def tariffs_view(request):
         "doc_2021": doc_2021
     })
 def appeals(request):
-    document = Document.objects.filter(
-        title="Інформація щодо дотримання загальних та гарантованих стандартів якості надання послуг за 2018 рік"
-    ).first()
-
-    context = {
-        "document": document
-    }
-
-    return render(request, "main/appeals.html", context)
+    return render(request, "main/appeals.html")
 
   
