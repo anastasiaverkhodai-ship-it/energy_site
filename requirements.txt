@@ -6,8 +6,6 @@ filelock==3.18.0
 gunicorn==23.0.0
 packaging==24.2
 pipenv==2024.4.1
-cloudinary
-django-cloudinary-storage
 platformdirs==4.3.7
 setuptools==77.0.3
 sqlparse==0.5.3

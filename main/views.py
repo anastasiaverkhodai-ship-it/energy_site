@@ -49,8 +49,6 @@ def complaints(request):
     return render(request, 'main/complaints.html')
 def documentation_overview(request):
     return render(request, 'main/documentation_overview.html')
-def appeals(request):
-    return render(request, 'main/appeals.html')
 from django.shortcuts import render, get_object_or_404
 from .models import TariffDocument
 
@@ -62,7 +60,7 @@ def tariffs_view(request):
         "doc_2021": doc_2021
     })
 def appeals(request):
-    document = Document.objects.filter(id=103).first()
+    document = Document.objects.filter(title__icontains="якість").first()
     return render(request, 'main/appeals.html', {'document': document})
 
 

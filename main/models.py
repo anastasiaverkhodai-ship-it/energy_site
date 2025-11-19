@@ -3,12 +3,6 @@ from django.db import models
 
 class Document(models.Model):
     title = models.CharField(max_length=255)
-    # Тепер цей FileField буде використовувати Cloudinary
-    file = models.FileField(upload_to='documents/') 
-    # В upload_to вказуєте папку на Cloudinary
-    
-class Document(models.Model):
-    title = models.CharField(max_length=255)
     file = models.FileField(upload_to='docs/')
 
     def __str__(self):

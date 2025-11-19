@@ -28,8 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'cloudinary',
-    'cloudinary_storage',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
@@ -112,21 +110,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # ----------------------
 MEDIA_URL = '/media/'  # not used for storage; just required by Django
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
-#import os
-
-# Конфігурація Cloudinary
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
-}
-
-# *** ABSOLUTELY CRITICAL ***
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ----------------------
 # AUTH / MISC
@@ -135,6 +119,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
 
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
