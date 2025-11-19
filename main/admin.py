@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django import forms
-from pyuploadcare.dj.forms import FileUploaderWidget   # ← ВАЖЛИВО!
-
+from pyuploadcare.dj.forms import FileWidget
 from .models import Document, TariffDocument
 
 
@@ -12,7 +11,7 @@ class DocumentAdminForm(forms.ModelForm):
         model = Document
         fields = "__all__"
         widgets = {
-            "file": FileUploaderWidget,   # ← використовуємо FileUploaderWidget
+            "file": FileWidget,   # ← використовуємо FileUploaderWidget
         }
 
 
@@ -29,7 +28,7 @@ class TariffDocumentAdminForm(forms.ModelForm):
         model = TariffDocument
         fields = "__all__"
         widgets = {
-            "file": FileUploaderWidget,   # ← тут теж замінюємо
+            "file": FileWidget,   # ← тут теж замінюємо
         }
 
 
