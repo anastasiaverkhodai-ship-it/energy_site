@@ -8,7 +8,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 UPLOADCARE = {
     'pub_key': '36a3b067e0bb8abe769c',
-    'secret': '8b7e2b4a12c7d8530cbd',
+    'secret': '67df6d9ae083fc6a1ddb',
 }
 DEFAULT_FILE_STORAGE = 'pyuploadcare.dj.storage.UploadcareStorage'
 
