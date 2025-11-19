@@ -1,9 +1,6 @@
-
-
-# Register your models here.
 from django.contrib import admin
 from django import forms
-from pyuploadcare.dj.forms import FileWidget
+from pyuploadcare.dj.forms import FileUploaderWidget   # ← ВАЖЛИВО!
 
 from .models import Document, TariffDocument
 
@@ -15,7 +12,7 @@ class DocumentAdminForm(forms.ModelForm):
         model = Document
         fields = "__all__"
         widgets = {
-            "file": FileWidget,     # Uploadcare widget
+            "file": FileUploaderWidget,   # ← використовуємо FileUploaderWidget
         }
 
 
@@ -32,7 +29,7 @@ class TariffDocumentAdminForm(forms.ModelForm):
         model = TariffDocument
         fields = "__all__"
         widgets = {
-            "file": FileWidget,     # Uploadcare widget
+            "file": FileUploaderWidget,   # ← тут теж замінюємо
         }
 
 
