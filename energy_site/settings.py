@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'cloudinary',
-    'cloudinary_storage'
+    'cloudinary_storage',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
@@ -120,9 +120,9 @@ import cloudinary.api
 
 # Конфігурація Cloudinary
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('dm4dhfqmk'),
-    'API_KEY': os.environ.get('544226813353368'),
-    'API_SECRET': os.environ.get('JH887nTIkxZkBuUU9g5g3CYqMJI')
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
 }
 
 # *** ABSOLUTELY CRITICAL ***
