@@ -6,7 +6,9 @@ from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+UPLOADCARE_PUBLIC_KEY = "36a3b067e0bb8abe769c"
+UPLOADCARE_SECRET_KEY = "8b7e2b4a12c7d8530cbd"
+DEFAULT_FILE_STORAGE = 'pyuploadcare.dj.storage.UploadcareStorage'
 SECRET_KEY = 'django-insecure-*+&7sy4(by3gw+mp^a1!$pp!7l4_k-k0n&sxaw4(q!3*0nykw)'
 
 DEBUG = False
@@ -127,11 +129,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/login/'
-
-UPLOADCARE_PUBLIC_KEY = "36a3b067e0bb8abe769c"
-UPLOADCARE_SECRET_KEY = "8b7e2b4a12c7d8530cbd"
-
-
-DEFAULT_FILE_STORAGE = 'pyuploadcare.dj.storage.UploadcareStorage'
 
 
