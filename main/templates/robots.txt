@@ -1,4 +1,4 @@
+# Виправлення robots.txt: Дозволено сканування 10.12.2025
 User-agent: *
 Allow: /
-
 Sitemap: https://alterhol.com.ua/sitemap.xml
