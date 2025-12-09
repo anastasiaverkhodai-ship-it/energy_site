@@ -6,14 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic import TemplateView
-from django.contrib.sitemaps.views import sitemap
-from . import views
-from .sitemaps import StaticViewSitemap, DocumentSitemap
 
-sitemaps = {
-    'static': StaticViewSitemap,
-    'documents': DocumentSitemap,
-}
 
 
 urlpatterns = [
@@ -27,7 +20,6 @@ urlpatterns = [
     path('about/', main_views.about, name='about'),
     path('why/', main_views.why, name='why'),
      path('how/', main_views.how, name='how'),
-     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
      path('documentation/', main_views.documentation, name='documentation'),
      path('consumer/', main_views.consumer, name='consumer'),
      path('contract_docs/', main_views.contract_docs, name='contract_docs'),
@@ -39,7 +31,6 @@ urlpatterns = [
         template_name="robots.txt",
         content_type="text/plain"
     )),
-    
 
 
 
