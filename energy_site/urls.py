@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Публічні сторінки
+    
     path('', main_views.home, name='home'),
     path('tariffs/', main_views.tariffs, name='tariffs'),
     path('contacts/', main_views.contacts, name='contacts'),
@@ -25,8 +26,10 @@ urlpatterns = [
      path('complaints/', main_views.complaints, name='complaints'),
      path('documentation_overview/', main_views.documentation_overview, name='documentation_overview'),
      path('appeals/', main_views.appeals, name='appeals'),
-     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_txt"),
-
+     path('robots.txt', TemplateView.as_view(
+        template_name="robots.txt",
+        content_type="text/plain"
+    )),
 
 
 
