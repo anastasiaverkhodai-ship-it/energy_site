@@ -4,6 +4,9 @@ from main import views as main_views
 from accounts import views as accounts_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path, include
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,6 +25,8 @@ urlpatterns = [
      path('complaints/', main_views.complaints, name='complaints'),
      path('documentation_overview/', main_views.documentation_overview, name='documentation_overview'),
      path('appeals/', main_views.appeals, name='appeals'),
+     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_txt"),
+
 
 
 
