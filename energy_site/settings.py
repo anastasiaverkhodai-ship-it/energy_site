@@ -23,8 +23,11 @@ ALLOWED_HOSTS = [
     'localhost',
     'alterhol.com',
     'www.alterhol.com',
+    'alterhol.com.ua',
+    'www.alterhol.com.ua',
     'energy-site.onrender.com',
 ]
+
 
 # ----------------------
 # UPLOADCARE
