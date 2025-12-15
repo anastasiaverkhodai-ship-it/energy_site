@@ -14,4 +14,5 @@ virtualenv==20.29.3
 whitenoise
 djangorestframework
 djangorestframework-simplejwt
-corsheaders
+django-cors-headers
+
