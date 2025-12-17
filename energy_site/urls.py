@@ -21,12 +21,13 @@ sitemaps = {
 
 def sitemap_xml(request):
     response = sitemap_views.sitemap(request, sitemaps=sitemaps)
-    xml = response.content.decode("utf-8")
+    response.render()  # ← ОСЬ ЦЕ ГОЛОВНЕ
 
-    # прибираємо example.com і підставляємо твій домен
+    xml = response.content.decode("utf-8")
     xml = xml.replace("https://example.com", settings.SITE_DOMAIN)
 
     return HttpResponse(xml, content_type="application/xml")
+
 
 
 urlpatterns = [
