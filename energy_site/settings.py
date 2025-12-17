@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 
     # third-party
     'rest_framework',
@@ -62,6 +64,7 @@ INSTALLED_APPS = [
     'main',
     'accounts',
 ]
+SITE_ID = 1
 
 # ----------------------
 # MIDDLEWARE

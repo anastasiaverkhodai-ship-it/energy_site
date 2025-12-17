@@ -8,9 +8,15 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from accounts.views import api_register, api_me
+from django.contrib.sitemaps.views import sitemap
+from main.sitemaps import StaticViewSitemap
 
 
 
+
+sitemaps = {
+    "static": StaticViewSitemap,
+}
 
 
 urlpatterns = [
@@ -33,8 +39,10 @@ urlpatterns = [
      path('appeals/', main_views.appeals, name='appeals'),
      path('robots.txt', TemplateView.as_view(
         template_name="robots.txt",
+        
         content_type="text/plain"
     )),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
      path("api/auth/login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/auth/register/", api_register),
