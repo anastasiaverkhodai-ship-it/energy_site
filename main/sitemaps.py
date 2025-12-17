@@ -1,7 +1,5 @@
-from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
-
 
 class StaticViewSitemap(Sitemap):
     priority = 0.8
@@ -25,4 +23,4 @@ class StaticViewSitemap(Sitemap):
         ]
 
     def location(self, item):
-        return settings.SITE_DOMAIN + reverse(item)
+        return reverse(item)
