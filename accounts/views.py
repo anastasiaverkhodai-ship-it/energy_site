@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.shortcuts import render
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 
@@ -31,6 +32,11 @@ def logout_view(request):
 def profile(request):
     # /profile/ тепер веде в кабінет
     return redirect("/cabinet")
+
+
+def cabinet(request):
+    return render(request, "cabinet/index.html")
+
 
 
 # =========================
