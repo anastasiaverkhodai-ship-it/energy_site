@@ -1,66 +1,6 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-
-# ===== ТВОЇ СТАРІ VIEW (НЕ ЧІПАЄМО) =====
-
-def register(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        password2 = request.POST['password2']
-
-        if password != password2:
-            messages.error(request, "Паролі не співпадають")
-            return redirect('register')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Користувач з таким ім'ям вже існує")
-            return redirect('register')
-
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-        )
-        user.save()
-
-        messages.success(request, "Реєстрація успішна. Тепер увійдіть.")
-        return redirect('login')
-
-    return render(request, 'accounts/register.html')
-
-
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('profile')
-        else:
-            messages.error(request, "Невірний логін або пароль")
-            return redirect('login')
-
-    return render(request, 'accounts/login.html')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('home')
-
-
-@login_required
-def profile(request):
-    return render(request, 'accounts/profile.html')
-
-
-# ===== НОВІ API VIEW ДЛЯ REACT =====
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -68,12 +8,45 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+# =========================
+# DJANGO URLS -> REDIRECT TO REACT CABINET
+# =========================
+
+def register(request):
+    # старий /register/ тепер веде в React
+    return redirect("/cabinet/register")
+
+
+def login_view(request):
+    # старий /login/ тепер веде в React
+    return redirect("/cabinet/login")
+
+
+def logout_view(request):
+    # якщо колись використовувалась django-сесія — очистимо
+    logout(request)
+    return redirect("/cabinet/login")
+
+
+def profile(request):
+    # /profile/ тепер веде в кабінет
+    return redirect("/cabinet")
+
+
+# =========================
+# API FOR REACT (JWT)
+# =========================
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def api_register(request):
-    username = request.data.get("username")
-    password = request.data.get("password")
-    email = request.data.get("email", "")
+    """
+    POST /api/auth/register/
+    body: { "username": "...", "password": "...", "email": "..." }
+    """
+    username = (request.data.get("username") or "").strip()
+    password = request.data.get("password") or ""
+    email = (request.data.get("email") or "").strip()
 
     if not username or not password:
         return Response(
@@ -87,11 +60,7 @@ def api_register(request):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    user = User.objects.create_user(
-        username=username,
-        password=password,
-        email=email
-    )
+    user = User.objects.create_user(username=username, password=password, email=email)
 
     return Response(
         {"id": user.id, "username": user.username},
@@ -102,6 +71,10 @@ def api_register(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def api_me(request):
+    """
+    GET /api/users/me/
+    Header: Authorization: Bearer <access_token>
+    """
     user = request.user
     return Response({
         "id": user.id,

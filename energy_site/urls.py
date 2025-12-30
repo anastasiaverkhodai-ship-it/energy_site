@@ -3,6 +3,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from django.urls import path, re_path
+from django.views.generic import TemplateView
 
 from main import views as main_views
 from accounts import views as accounts_views
@@ -47,6 +49,8 @@ urlpatterns = [
     path("complaints/", main_views.complaints, name="complaints"),
     path("documentation_overview/", main_views.documentation_overview, name="documentation_overview"),
     path("appeals/", main_views.appeals, name="appeals"),
+    path("cabinet/", TemplateView.as_view(template_name="cabinet/index.html")),
+    re_path(r"^cabinet/.*$", TemplateView.as_view(template_name="cabinet/index.html")),
 
     # robots + sitemap
     path("robots.txt", TemplateView.as_view(
