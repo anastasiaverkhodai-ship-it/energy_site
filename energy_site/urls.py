@@ -55,6 +55,8 @@ urlpatterns = [
     path("cabinet/<path:path>", TemplateView.as_view(
         template_name="cabinet/index.html"
     )),
+    path("cabinet/", main_views.cabinet, name="cabinet"),
+
 
     # robots + sitemap
     path("robots.txt", TemplateView.as_view(
