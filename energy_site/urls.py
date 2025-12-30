@@ -49,8 +49,12 @@ urlpatterns = [
     path("complaints/", main_views.complaints, name="complaints"),
     path("documentation_overview/", main_views.documentation_overview, name="documentation_overview"),
     path("appeals/", main_views.appeals, name="appeals"),
-    path("cabinet/", TemplateView.as_view(template_name="cabinet/index.html")),
-    re_path(r"^cabinet/.*$", TemplateView.as_view(template_name="cabinet/index.html")),
+   path("cabinet/", TemplateView.as_view(
+        template_name="cabinet/index.html"
+    )),
+    path("cabinet/<path:path>", TemplateView.as_view(
+        template_name="cabinet/index.html"
+    )),
 
     # robots + sitemap
     path("robots.txt", TemplateView.as_view(
