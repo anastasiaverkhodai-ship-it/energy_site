@@ -3,8 +3,6 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from django.urls import path, re_path
-from django.views.generic import TemplateView
 
 from main import views as main_views
 from accounts import views as accounts_views
@@ -23,13 +21,12 @@ sitemaps = {
 
 def sitemap_xml(request):
     response = sitemap_views.sitemap(request, sitemaps=sitemaps)
-    response.render()  # ← ОСЬ ЦЕ ГОЛОВНЕ
+    response.render()
 
     xml = response.content.decode("utf-8")
     xml = xml.replace("https://example.com", settings.SITE_DOMAIN)
 
     return HttpResponse(xml, content_type="application/xml")
-
 
 
 urlpatterns = [
@@ -49,14 +46,10 @@ urlpatterns = [
     path("complaints/", main_views.complaints, name="complaints"),
     path("documentation_overview/", main_views.documentation_overview, name="documentation_overview"),
     path("appeals/", main_views.appeals, name="appeals"),
-   path("cabinet/", TemplateView.as_view(
-        template_name="cabinet/index.html"
-    )),
-    path("cabinet/<path:path>", TemplateView.as_view(
-        template_name="cabinet/index.html"
-    )),
-    path("cabinet/", main_views.cabinet, name="cabinet"),
 
+    # ✅ Кабінет (React SPA)
+    path("cabinet/", main_views.cabinet, name="cabinet"),
+    path("cabinet/<path:path>", main_views.cabinet),  # для /cabinet/login, /cabinet/register, etc.
 
     # robots + sitemap
     path("robots.txt", TemplateView.as_view(
@@ -71,7 +64,7 @@ urlpatterns = [
     path("api/auth/register/", api_register),
     path("api/users/me/", api_me),
 
-    # Авторизація/акаунт
+    # Авторизація/акаунт (старі django сторінки — можеш лишити)
     path("register/", accounts_views.register, name="register"),
     path("login/", accounts_views.login_view, name="login"),
     path("logout/", accounts_views.logout_view, name="logout"),
