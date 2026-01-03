@@ -5,7 +5,6 @@ Django settings for energy_site project.
 from pathlib import Path
 from datetime import timedelta
 import os
-
 import dj_database_url
 
 # ----------------------
