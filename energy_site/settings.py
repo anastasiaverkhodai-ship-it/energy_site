@@ -6,184 +6,230 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+import dj_database_url
+
 # ----------------------
 # BASE DIR
 # ----------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ----------------------
-# SECURITY
-# ----------------------
-SECRET_KEY = 'django-insecure-*+&7sy4(by3gw+mp^a1!$pp!7l4_k-k0n&sxaw4(q!3*0nykw)'
 
-DEBUG = True
+# ----------------------
+# SECURITY / ENV
+# ----------------------
+# Render/Prod: set SECRET_KEY in Environment
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret-key")
+
+# Render: set DEBUG="0" (or "False")
+DEBUG = os.environ.get("DEBUG", "1").lower() in ("1", "true", "yes", "y")
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'alterhol.com',
-    'www.alterhol.com',
-    'alterhol.com.ua',
-    'www.alterhol.com.ua',
-    'energy-site.onrender.com',
+    "127.0.0.1",
+    "localhost",
+    "alterhol.com",
+    "www.alterhol.com",
+    "alterhol.com.ua",
+    "www.alterhol.com.ua",
+    "energy-site.onrender.com",
 ]
 
+# Якщо на Render інколи приходить host без www/з іншим доменом —
+# можна дозволити все (не рекомендую), тому залишаємо чіткий список.
 
 
 # ----------------------
-# UPLOADCARE
+# SITE / DOMAIN (для sitemap)
+# ----------------------
+SITE_ID = int(os.environ.get("SITE_ID", "1"))
+SITE_DOMAIN = os.environ.get("SITE_DOMAIN", "https://alterhol.com.ua")
+
+
+# ----------------------
+# UPLOADCARE (виносимо в ENV)
 # ----------------------
 UPLOADCARE = {
-    'pub_key': '36a3b067e0bb8abe769c',
-    'secret': '67df6d9ae083fc6a1ddb',
+    "pub_key": os.environ.get("UPLOADCARE_PUBLIC_KEY", ""),
+    "secret": os.environ.get("UPLOADCARE_SECRET_KEY", ""),
 }
 
-DEFAULT_FILE_STORAGE = 'pyuploadcare.dj.storage.UploadcareStorage'
+DEFAULT_FILE_STORAGE = "pyuploadcare.dj.storage.UploadcareStorage"
+
 
 # ----------------------
 # INSTALLED APPS
 # ----------------------
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
 
     # third-party
-    'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders',
-    'rest_framework_simplejwt',
-    'pyuploadcare.dj',
+    "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
+    "rest_framework_simplejwt",
+    "pyuploadcare.dj",
 
     # local apps
-    'main',
-    'accounts',
+    "main",
+    "accounts",
 ]
-SITE_ID = 1
-SITE_DOMAIN = "https://alterhol.com.ua"
-
 
 
 # ----------------------
 # MIDDLEWARE
 # ----------------------
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 
-    'corsheaders.middleware.CorsMiddleware',  # ❗ має бути ВИЩЕ CommonMiddleware
+    "corsheaders.middleware.CorsMiddleware",  # має бути вище CommonMiddleware
 
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 # ----------------------
 # URLS / WSGI
 # ----------------------
-ROOT_URLCONF = 'energy_site.urls'
-WSGI_APPLICATION = 'energy_site.wsgi.application'
+ROOT_URLCONF = "energy_site.urls"
+WSGI_APPLICATION = "energy_site.wsgi.application"
+
 
 # ----------------------
 # TEMPLATES
 # ----------------------
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'main' / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "main" / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
+
 # ----------------------
 # DATABASE
 # ----------------------
+# Render gives DATABASE_URL automatically when you attach a Postgres.
+# Locally falls back to sqlite.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=not DEBUG,
+    )
 }
+
 
 # ----------------------
 # PASSWORD VALIDATION
 # ----------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
+
 
 # ----------------------
 # INTERNATIONALIZATION
 # ----------------------
-LANGUAGE_CODE = 'uk'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = "uk"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
+
 
 # ----------------------
 # STATIC FILES
 # ----------------------
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Якщо у тебе реально є папка /static в корені проекту — лишаємо.
+# Якщо її нема — краще прибрати STATICFILES_DIRS.
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 # ----------------------
 # MEDIA
 # ----------------------
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 # ----------------------
 # AUTH
 # ----------------------
-LOGIN_URL = '/login/'
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = "/login/"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 # ----------------------
-# CORS
+# CORS / CSRF (ВАЖЛИВО для React кабінету)
 # ----------------------
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://alterhol.com.ua",
+    "https://www.alterhol.com.ua",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+# Якщо колись буде робота з cookie/CSRF — краще додати trusted origins:
+CSRF_TRUSTED_ORIGINS = [
+    "https://alterhol.com.ua",
+    "https://www.alterhol.com.ua",
+]
+
 
 # ----------------------
 # DRF + JWT
 # ----------------------
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.AllowAny",
     ),
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+
+# ----------------------
+# SECURITY (прод)
+# ----------------------
+# На проді можна ввімкнути, коли все ок:
+# SECURE_SSL_REDIRECT = not DEBUG
+# SESSION_COOKIE_SECURE = not DEBUG
+# CSRF_COOKIE_SECURE = not DEBUG
