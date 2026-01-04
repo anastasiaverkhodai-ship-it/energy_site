@@ -16,10 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ----------------------
 # SECURITY / ENV
 # ----------------------
-# Render/Prod: set SECRET_KEY in Environment
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret-key")
 
-# Render: set DEBUG="0" (or "False")
 DEBUG = os.environ.get("DEBUG", "1").lower() in ("1", "true", "yes", "y")
 
 ALLOWED_HOSTS = [
@@ -32,9 +30,6 @@ ALLOWED_HOSTS = [
     "energy-site.onrender.com",
 ]
 
-# Якщо на Render інколи приходить host без www/з іншим доменом —
-# можна дозволити все (не рекомендую), тому залишаємо чіткий список.
-
 
 # ----------------------
 # SITE / DOMAIN (для sitemap)
@@ -44,11 +39,11 @@ SITE_DOMAIN = os.environ.get("SITE_DOMAIN", "https://alterhol.com.ua")
 
 
 # ----------------------
-# UPLOADCARE (виносимо в ENV)
+# UPLOADCARE (правильні ключі для pyuploadcare)
 # ----------------------
 UPLOADCARE = {
-    "pub_key": os.environ.get("UPLOADCARE_PUBLIC_KEY", ""),
-    "secret": os.environ.get("UPLOADCARE_SECRET_KEY", ""),
+    "public_key": os.environ.get("UPLOADCARE_PUBLIC_KEY", ""),
+    "secret_key": os.environ.get("UPLOADCARE_SECRET_KEY", ""),
 }
 
 DEFAULT_FILE_STORAGE = "pyuploadcare.dj.storage.UploadcareStorage"
@@ -127,10 +122,8 @@ TEMPLATES = [
 
 
 # ----------------------
-# DATABASE
+# DATABASE (Render Postgres / local sqlite)
 # ----------------------
-# Render gives DATABASE_URL automatically when you attach a Postgres.
-# Locally falls back to sqlite.
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
@@ -161,13 +154,13 @@ USE_TZ = True
 
 
 # ----------------------
-# STATIC FILES
+# STATIC FILES (WhiteNoise)
 # ----------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Якщо у тебе реально є папка /static в корені проекту — лишаємо.
-# Якщо її нема — краще прибрати STATICFILES_DIRS.
+# якщо папка static у корені реально існує — залишай
+# якщо ні — закоментуй цей рядок
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -188,7 +181,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # ----------------------
-# CORS / CSRF (ВАЖЛИВО для React кабінету)
+# CORS / CSRF (React кабінет)
 # ----------------------
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -199,7 +192,6 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-# Якщо колись буде робота з cookie/CSRF — краще додати trusted origins:
 CSRF_TRUSTED_ORIGINS = [
     "https://alterhol.com.ua",
     "https://www.alterhol.com.ua",
@@ -226,9 +218,8 @@ SIMPLE_JWT = {
 
 
 # ----------------------
-# SECURITY (прод)
+# SECURITY (Prod - вмикати коли все стабільно)
 # ----------------------
-# На проді можна ввімкнути, коли все ок:
 # SECURE_SSL_REDIRECT = not DEBUG
 # SESSION_COOKIE_SECURE = not DEBUG
 # CSRF_COOKIE_SECURE = not DEBUG
