@@ -54,11 +54,9 @@ urlpatterns = [
     ),
     path("sitemap.xml", sitemap_xml, name="sitemap"),
 
-    # Django акаунти (звичайні, НЕ React)
-    path("register/", accounts_views.register, name="register"),
-    path("login/", accounts_views.login_view, name="login"),
-    path("logout/", accounts_views.logout_view, name="logout"),
-    path("profile/", accounts_views.profile, name="profile"),
+    # API Auth (JWT) - Маршрути, які залишилися в accounts/views.py
+    path("api/auth/register/", accounts_views.api_register, name="api_register"),
+    path("api/users/me/", accounts_views.api_me, name="api_me"),
 ]
 
 if settings.DEBUG:
