@@ -107,8 +107,7 @@
 
 <div class="sidebar">
     <div class="sidebar-header">
-       <img src="{% static 'img/logo.png' %}" alt="Logo" style="height: 50px;">
-    
+    <img src="{% static 'img/logo.png' %}" alt="Logo" style="height: 100px; width: auto;">
     <div class="nav flex-column mt-3">
     <a href="{% url 'cabinet' %}" class="nav-link {% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
         <i class="fas fa-th-large"></i> Головна
