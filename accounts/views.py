@@ -128,33 +128,58 @@ def upload_document_view(request):
 # ==========================================
 
 @login_required
+@login_required
+@login_required
 def contragents_list(request):
     if not request.user.is_staff:
         return redirect('cabinet')
-    return render(request, 'accounts/contragents.html', {'contragents': Contragent.objects.all()})
-
+    
+    # Додаємо select_related для швидкості, щоб підтягнути юзерів одним запитом
+    try:
+        contragents = Contragent.objects.all().select_related('user')
+    except Exception as e:
+        print(f"Database error: {e}")
+        contragents = []
+        
+    return render(request, 'accounts/contragents.html', {'contragents': contragents})
 @login_required
 def edit_contragent_view(request, contragent_id=None):
     if not request.user.is_staff:
         return redirect('cabinet')
+    
     instance = get_object_or_404(Contragent, id=contragent_id) if contragent_id else None
+    users = User.objects.all() # Отримуємо список усіх користувачів
+
     if request.method == 'POST':
         name = request.POST.get('name')
         edrpou = request.POST.get('edrpou')
         manager = request.POST.get('manager')
+        user_id = request.POST.get('user_id') # ID обраного клієнта
+
         if instance:
             instance.name, instance.edrpou, instance.manager = name, edrpou, manager
+            instance.user_id = user_id if user_id else None
             instance.save()
         else:
-            Contragent.objects.create(name=name, edrpou=edrpou, manager=manager)
+            Contragent.objects.create(
+                name=name, edrpou=edrpou, manager=manager, 
+                user_id=user_id if user_id else None
+            )
+        messages.success(request, "Контрагента успішно збережено!")
         return redirect('contragents')
-    return render(request, 'accounts/edit_contragent.html', {'instance': instance})
 
+    return render(request, 'accounts/edit_contragent.html', {
+        'instance': instance, 
+        'users': users
+    })
 @login_required
 def delete_contragent_view(request, contragent_id):
     if not request.user.is_staff:
         return redirect('cabinet')
-    get_object_or_404(Contragent, id=contragent_id).delete()
+    
+    contragent = get_object_or_404(Contragent, id=contragent_id)
+    contragent.delete()
+    messages.success(request, f"Компанію {contragent.name} видалено")
     return redirect('contragents')
 
 @login_required
