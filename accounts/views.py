@@ -1,42 +1,11 @@
-from django.shortcuts import redirect
-from django.contrib.auth import logout
 from django.contrib.auth.models import User
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
-
 # =========================
-# DJANGO URLS -> REDIRECT TO REACT CABINET
-# =========================
-
-def register(request):
-    # старий /register/ тепер веде в React
-    return redirect("/cabinet/register")
-
-
-def login_view(request):
-    # старий /login/ тепер веде в React
-    return redirect("/cabinet/login")
-
-
-def logout_view(request):
-    # якщо колись використовувалась django-сесія — очистимо
-    logout(request)
-    return redirect("/cabinet/login")
-
-
-def profile(request):
-    # /profile/ тепер веде в кабінет
-    return redirect("/cabinet")
-
-
-
-
-# =========================
-# API FOR REACT (JWT)
+# API FOR AUTH (JWT)
 # =========================
 
 @api_view(["POST"])

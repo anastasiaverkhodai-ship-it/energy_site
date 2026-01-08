@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-
-from .forms import RegisterForm
+from django.shortcuts import render, get_object_or_404
 from .models import Document, TariffDocument
 
+# Примітка: Імпорти RegisterForm, messages та redirect видалено, 
+# оскільки вони більше не використовуються в цьому файлі.
 
 def home(request):
     return render(request, "main/home.html")
@@ -66,22 +65,3 @@ def tariffs_view(request):
 
 def appeals(request):
     return render(request, "main/appeals.html")
-
-
-# ✅ React cabinet entrypoint (для /cabinet/*)
-def cabinet(request, path=None):
-    return render(request, "cabinet/index.html")
-
-
-# ⚠️ Старий register у main (краще прибрати з urls)
-# Якщо все ще потрібен — залишай, але НЕ називай його 'register' у urls, бо буде конфлікт.
-def legacy_register(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Реєстрація успішна! Можете увійти.")
-            return redirect("home")
-    else:
-        form = RegisterForm()
-    return render(request, "register.html", {"form": form})
