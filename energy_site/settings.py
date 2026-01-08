@@ -70,7 +70,6 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "rest_framework_simplejwt",
-    "pyuploadcare.dj",
 
     # local apps
     "main",
