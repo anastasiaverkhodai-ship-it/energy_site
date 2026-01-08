@@ -9,5 +9,8 @@ class ContragentAdmin(admin.ModelAdmin):
 
 @admin.register(Agreement)
 class AgreementAdmin(admin.ModelAdmin):
-    list_display = ('number', 'contragent', 'region', 'date_created')
-    list_filter = ('region',)                   # фільтр збоку
+    # Якщо ти перейменувала поле на 'date':
+    list_display = ('number', 'contragent', 'region', 'date') 
+    
+    # АБО просто видали четвертий елемент, щоб не було конфлікту:
+    # list_display = ('number', 'contragent', 'region')
