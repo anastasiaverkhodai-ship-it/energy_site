@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-insecure-secret-key")
 
 # Render: set DEBUG="0" (or "False")
-DEBUG = os.environ.get("DEBUG", "1").lower() in ("1", "true", "yes", "y")
+DEBUG = os.environ.get("DEBUG", "0").lower() in ("1", "true", "yes", "y")
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -77,7 +77,7 @@ INSTALLED_APPS = [
 ]
 
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
 
 
 CLOUDINARY_STORAGE = {
@@ -244,3 +244,5 @@ SIMPLE_JWT = {
 # SECURE_SSL_REDIRECT = not DEBUG
 # SESSION_COOKIE_SECURE = not DEBUG
 # CSRF_COOKIE_SECURE = not DEBUG
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
