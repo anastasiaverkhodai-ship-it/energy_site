@@ -49,20 +49,13 @@ SITE_DOMAIN = os.environ.get("SITE_DOMAIN", "https://alterhol.com.ua")
 # ----------------------
 # UPLOADCARE (виправлено)
 # ----------------------
-UPLOADCARE = {
-    # Бібліотека очікує саме 'pub_key'
-    "pub_key": os.environ.get("UPLOADCARE_PUB_KEY", "36a3b067e0bb8abe769c"),
-    # Бібліотека очікує саме 'secret'
-    "secret": os.environ.get("UPLOADCARE_SECRET_KEY", "67df6d9ae083fc6a1ddb"),
-}
 
-# Важливо для коректної роботи сховища
-UPLOADCARE_STORAGE = "pyuploadcare.dj.storage.UploadcareStorage"
-DEFAULT_FILE_STORAGE = UPLOADCARE_STORAGE
 # ----------------------
 # INSTALLED APPS
 # ----------------------
 INSTALLED_APPS = [
+    'cloudinary_storage',
+    'cloudinary',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -71,8 +64,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
-    'cloudinary_storage',
-    'cloudinary',
 
     # third-party
     "rest_framework",
@@ -94,6 +85,7 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dm4dhfqmk',
     'API_KEY': '544226813353368',
     'API_SECRET': 'JH887nTIkxZkBuUU9g5g3CYqMJI'
+    
 }
 # ----------------------
 # MIDDLEWARE
