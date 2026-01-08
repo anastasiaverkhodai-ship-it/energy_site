@@ -87,12 +87,14 @@ INSTALLED_APPS = [
 ]
 
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dm4dhfqmk',
     'API_KEY': '544226813353368',
     'API_SECRET': 'JH887nTIkxZkBuUU9g5g3CYqMJI'
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 # ----------------------
 # MIDDLEWARE
 # ----------------------
