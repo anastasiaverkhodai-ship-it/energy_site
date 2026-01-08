@@ -1,14 +1,11 @@
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
 from main import views as main_views
 from accounts import views as accounts_views
-
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from accounts.views import api_register, api_me
 
 # --- SITEMAP FIX (Render-safe, без Sites адмінки) ---
 from django.http import HttpResponse
@@ -47,24 +44,17 @@ urlpatterns = [
     path("documentation_overview/", main_views.documentation_overview, name="documentation_overview"),
     path("appeals/", main_views.appeals, name="appeals"),
 
-    # ✅ Кабінет (React SPA)
-    path("cabinet/", main_views.cabinet, name="cabinet"),
-    re_path(r"^cabinet/.*$", main_views.cabinet),
-    
     # robots + sitemap
-    path("robots.txt", TemplateView.as_view(
-        template_name="robots.txt",
-        content_type="text/plain"
-    )),
+    path(
+        "robots.txt",
+        TemplateView.as_view(
+            template_name="robots.txt",
+            content_type="text/plain"
+        )
+    ),
     path("sitemap.xml", sitemap_xml, name="sitemap"),
 
-    # API auth
-    path("api/auth/login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/auth/register/", api_register),
-    path("api/users/me/", api_me),
-
-    # Авторизація/акаунт (старі django сторінки — можеш лишити)
+    # Django акаунти (звичайні, НЕ React)
     path("register/", accounts_views.register, name="register"),
     path("login/", accounts_views.login_view, name="login"),
     path("logout/", accounts_views.logout_view, name="logout"),
