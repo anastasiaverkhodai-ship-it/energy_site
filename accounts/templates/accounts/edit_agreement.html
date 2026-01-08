@@ -22,9 +22,9 @@
                 <select name="contragent" class="form-select" required>
                     <option value="" disabled {% if not instance %}selected{% endif %}>Оберіть компанію...</option>
                     {% for c in contragents %}
-                        <option value="{{ c.id }}" {% if instance.contragent.id == c.id %}selected{% endif %}>
-                            {{ c.name }} ({{ c.edrpou }})
-                        </option>
+                       <option value="{{ c.id }}" {% if instance and instance.contragent.id == c.id %}selected{% endif %}>
+    {{ c.name }} ({{ c.edrpou }})
+</option>
                     {% endfor %}
                 </select>
             </div>

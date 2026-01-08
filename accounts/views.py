@@ -157,8 +157,10 @@ def edit_contragent_view(request, contragent_id=None):
         user_id = request.POST.get('user_id') # ID обраного клієнта
 
         if instance:
-            instance.name, instance.edrpou, instance.manager = name, edrpou, manager
-            instance.user_id = user_id if user_id else None
+            instance.name, 
+            instance.edrpou,
+            instance.manager = manager
+            instance.user_id = User.objects.filter(id=user_id).first() if user_id else None
             instance.save()
         else:
             Contragent.objects.create(

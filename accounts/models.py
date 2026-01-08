@@ -30,8 +30,9 @@ class Agreement(models.Model):
         verbose_name="Контрагент"
     )
     region = models.CharField("Область/Регіон", max_length=100, default="Не вказано")
-    date_created = models.DateTimeField("Дата створення", auto_now_add=True)
+    date = models.DateField("Дата підписання", null=True, blank=True)
     file = models.FileField("Файл договору", upload_to='agreements/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Договір №{self.number}"
