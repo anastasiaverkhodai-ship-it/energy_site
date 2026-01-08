@@ -46,14 +46,19 @@ SITE_DOMAIN = os.environ.get("SITE_DOMAIN", "https://alterhol.com.ua")
 # ----------------------
 # UPLOADCARE (виносимо в ENV)
 # ----------------------
+U# ----------------------
+# UPLOADCARE (виправлено)
+# ----------------------
 UPLOADCARE = {
-    "pub_key": os.environ.get("36a3b067e0bb8abe769c", ""),
-    "secret": os.environ.get("67df6d9ae083fc6a1ddb", ""),
+    # Бібліотека очікує саме 'pub_key'
+    "pub_key": os.environ.get("UPLOADCARE_PUB_KEY", "36a3b067e0bb8abe769c"),
+    # Бібліотека очікує саме 'secret'
+    "secret": os.environ.get("UPLOADCARE_SECRET_KEY", "67df6d9ae083fc6a1ddb"),
 }
 
-DEFAULT_FILE_STORAGE = "pyuploadcare.dj.storage.UploadcareStorage"
-
-
+# Важливо для коректної роботи сховища
+UPLOADCARE_STORAGE = "pyuploadcare.dj.storage.UploadcareStorage"
+DEFAULT_FILE_STORAGE = UPLOADCARE_STORAGE
 # ----------------------
 # INSTALLED APPS
 # ----------------------
