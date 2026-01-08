@@ -46,7 +46,7 @@ SITE_DOMAIN = os.environ.get("SITE_DOMAIN", "https://alterhol.com.ua")
 # ----------------------
 # UPLOADCARE (виносимо в ENV)
 # ----------------------
-U# ----------------------
+# ----------------------
 # UPLOADCARE (виправлено)
 # ----------------------
 UPLOADCARE = {
