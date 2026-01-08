@@ -14,12 +14,13 @@
                 <input type="text" name="name" class="form-control" value="{{ instance.name|default:'' }}" required>
             </div>
 
-            <div class="mb-3">
+           <div class="mb-3">
     <label class="form-label">Прив'язати користувача (Клієнта)</label>
     <select name="user_id" class="form-select">
         <option value="">---------</option>
         {% for user in users %}
-            <option value="{{ user.id }}" {% if instance.user.id == user.id %}selected{% endif %}>
+            <option value="{{ user.id }}" 
+                {% if instance and instance.user and instance.user.id == user.id %}selected{% endif %}>
                 {{ user.username }} ({% if user.first_name %}{{ user.first_name }}{% else %}Без імені{% endif %})
             </option>
         {% endfor %}
