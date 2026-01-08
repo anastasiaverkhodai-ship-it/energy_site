@@ -1,9 +1,9 @@
 from django.db import models
-from pyuploadcare.dj.models import FileField   # важливо!
 
 class Document(models.Model):
     title = models.CharField(max_length=255)
-    file = FileField(blank=True, null=True)   # Uploadcare зберігає файл у хмарі
+    # Замінюємо FileField на стандартний Django Field
+    file = models.FileField(upload_to='documents/', blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -12,10 +12,8 @@ class Document(models.Model):
 class TariffDocument(models.Model):
     year = models.IntegerField()
     name = models.CharField(max_length=255)
-    file = FileField(blank=True, null=True)   # також через Uploadcare
+    # Замінюємо FileField на стандартний Django Field
+    file = models.FileField(upload_to='tariffs/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.year})"
-
-
-
