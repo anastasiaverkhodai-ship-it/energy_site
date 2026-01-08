@@ -205,10 +205,16 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 # Якщо колись буде робота з cookie/CSRF — краще додати trusted origins:
+# Додайте ваш домен у список довірених
 CSRF_TRUSTED_ORIGINS = [
-    "https://alterhol.com.ua",
-    "https://www.alterhol.com.ua",
+    'https://alterhol.com.ua',
+    'https://www.alterhol.com.ua',
+    'https://energy-site.onrender.com' # адреса від рендер
 ]
+
+# Переконайтеся, що сесії працюють через HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # ----------------------
