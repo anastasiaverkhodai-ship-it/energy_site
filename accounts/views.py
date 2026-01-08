@@ -139,30 +139,29 @@ def edit_contragent_view(request, contragent_id=None):
         return redirect('cabinet')
     
     instance = get_object_or_404(Contragent, id=contragent_id) if contragent_id else None
-    users = User.objects.all() # Отримуємо список усіх користувачів
+    users = User.objects.all()
 
     if request.method == 'POST':
-        name = request.POST.get('name')
-        edrpou = request.POST.get('edrpou')
-        manager = request.POST.get('manager')
-        user_id = request.POST.get('user_id') # ID обраного клієнта
-
+        user_id = request.POST.get('user_id')
+        # Важливо: перевіряємо, чи вибрано користувача
+        selected_user = User.objects.filter(id=user_id).first() if user_id else None
+        
         if instance:
-            instance.name, instance.edrpou, instance.manager = name, edrpou, manager
-            instance.user_id = user_id if user_id else None
+            instance.name = request.POST.get('name')
+            instance.edrpou = request.POST.get('edrpou')
+            instance.manager = request.POST.get('manager')
+            instance.user = selected_user # Може бути None
             instance.save()
         else:
             Contragent.objects.create(
-                name=name, edrpou=edrpou, manager=manager, 
-                user_id=user_id if user_id else None
+                name=request.POST.get('name'),
+                edrpou=request.POST.get('edrpou'),
+                manager=request.POST.get('manager'),
+                user=selected_user
             )
-        messages.success(request, "Контрагента успішно збережено!")
         return redirect('contragents')
 
-    return render(request, 'accounts/edit_contragent.html', {
-        'instance': instance, 
-        'users': users
-    })
+    return render(request, 'accounts/edit_contragent.html', {'instance': instance, 'users': users})
 @login_required
 def delete_contragent_view(request, contragent_id):
     if not request.user.is_staff:
