@@ -124,7 +124,7 @@
             <i class="fas fa-file-contract"></i> Договори
         </a>
     {% endif %}
-    
+    <img src="{% static 'img/logo.png' %}" alt="Logo" style="height: 50px;">
     <a href="{% url 'documents' %}" class="nav-link {% if 'documents' in request.path %}active{% endif %}">
         <i class="fas fa-folder-open"></i> Документи
     </a>
