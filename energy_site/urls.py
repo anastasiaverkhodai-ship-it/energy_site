@@ -76,6 +76,7 @@ path("cabinet/documents/upload/", accounts_views.upload_document_view, name="upl
 path('cabinet/contragents/add/', accounts_views.edit_contragent_view, name='add_contragent'),
 path('cabinet/contragents/edit/<int:contragent_id>/', accounts_views.edit_contragent_view, name='edit_contragent'),
 path('cabinet/agreements/add/', accounts_views.edit_agreement_view, name='add_agreement'),
+path("cabinet/contragents/delete/<int:contragent_id>/", accounts_views.delete_contragent_view, name="delete_contragent"),
 ]
 
 if settings.DEBUG:
