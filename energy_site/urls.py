@@ -29,7 +29,7 @@ def sitemap_xml(request):
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    # Публічні сторінки
+    # Публічні сторінки (основний сайт)
     path("", main_views.home, name="home"),
     path("tariffs/", main_views.tariffs, name="tariffs"),
     path("contacts/", main_views.contacts, name="contacts"),
@@ -45,18 +45,37 @@ urlpatterns = [
     path("appeals/", main_views.appeals, name="appeals"),
 
     # robots + sitemap
-    path(
-        "robots.txt",
-        TemplateView.as_view(
-            template_name="robots.txt",
-            content_type="text/plain"
-        )
-    ),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path("sitemap.xml", sitemap_xml, name="sitemap"),
 
-    # API Auth (JWT) - Маршрути, які залишилися в accounts/views.py
+    # --- ЕЛЕКТРОННИЙ КАБІНЕТ (Django Views) ---
+    path("register/", accounts_views.register_view, name="register"),
+    path("login/", accounts_views.login_view, name="login"),
+    path("logout/", accounts_views.logout_view, name="logout"), # додайте цю функцію у views.py (просто logout(request) + redirect)
+    path("cabinet/", accounts_views.cabinet_view, name="cabinet"),
+    
+    # Сторінки всередині кабінету (на основі ваших скріншотів)
+    path("cabinet/contragents/", accounts_views.contragents_list, name="contragents"),
+    path("cabinet/users/", accounts_views.users_list_view, name="users_list"),
+
+    # API Auth (JWT) - залиште, якщо плануєте використовувати мобільний додаток
     path("api/auth/register/", accounts_views.api_register, name="api_register"),
     path("api/users/me/", accounts_views.api_me, name="api_me"),
+    path("cabinet/users/delete/<int:user_id>/", accounts_views.delete_user_view, name="delete_user"),
+    path("cabinet/users/edit/<int:user_id>/", accounts_views.edit_user_view, name="edit_user"),
+    path("cabinet/contragents/add/", accounts_views.edit_contragent_view, name="add_contragent"),
+path("cabinet/contragents/edit/<int:contragent_id>/", accounts_views.edit_contragent_view, name="edit_contragent"),
+path("cabinet/agreements/", accounts_views.agreements_list, name="agreements"),
+path("cabinet/agreements/add/", accounts_views.edit_agreement_view, name="add_agreement"),
+path("cabinet/agreements/edit/<int:agreement_id>/", accounts_views.edit_agreement_view, name="edit_agreement"),
+path("cabinet/agreements/delete/<int:agreement_id>/", accounts_views.delete_agreement_view, name="delete_agreement"),
+path("cabinet/documents/", accounts_views.documents_list, name="documents"),
+path("cabinet/users/add/", accounts_views.add_user_view, name="add_user"),
+path("cabinet/profile/", accounts_views.profile_view, name="profile"),
+path("cabinet/documents/upload/", accounts_views.upload_document_view, name="upload_document"),
+path('cabinet/contragents/add/', accounts_views.edit_contragent_view, name='add_contragent'),
+path('cabinet/contragents/edit/<int:contragent_id>/', accounts_views.edit_contragent_view, name='edit_contragent'),
+path('cabinet/agreements/add/', accounts_views.edit_agreement_view, name='add_agreement'),
 ]
 
 if settings.DEBUG:

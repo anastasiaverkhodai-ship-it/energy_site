@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Кабінет | Альтерхол</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --violet: #6a0dad;
+            --violet-dark: #1a0a38;
+            --violet-light: #9b30ff;
+            --highlight: #ffb3ff;
+            --sidebar-width: 320px;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, var(--violet-dark) 0%, var(--violet) 100%);
+            color: white;
+            padding-top: 30px;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 0 30px 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .section-title {
+            padding: 20px 30px 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.85);
+            padding: 18px 30px; 
+            font-size: 1.15rem; 
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--highlight);
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border-left: 5px solid var(--highlight);
+        }
+
+        .nav-link i {
+            margin-right: 20px;
+            font-size: 1.3rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .text-danger:hover {
+            background: rgba(220, 53, 69, 0.1) !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <span style="color: var(--highlight);">ALTER</span>HOL
+    </div>
+    
+    <div class="nav flex-column mt-3">
+    <a href="{% url 'cabinet' %}" class="nav-link {% if request.resolver_match.url_name == 'cabinet' %}active{% endif %}">
+        <i class="fas fa-th-large"></i> Головна
+    </a>
+    
+    {% if user.is_staff %}
+        <a href="{% url 'contragents' %}" class="nav-link {% if 'contragent' in request.path %}active{% endif %}">
+            <i class="fas fa-building"></i> Контрагенти
+        </a>
+        
+        <a href="{% url 'agreements' %}" class="nav-link {% if 'agreement' in request.path %}active{% endif %}">
+            <i class="fas fa-file-contract"></i> Договори
+        </a>
+    {% endif %}
+    
+    <a href="{% url 'documents' %}" class="nav-link {% if 'documents' in request.path %}active{% endif %}">
+        <i class="fas fa-folder-open"></i> Документи
+    </a>
+
+    {% if user.is_staff %}
+        <div class="section-title">Адміністрування</div>
+        <a href="{% url 'users_list' %}" class="nav-link {% if 'users' in request.path %}active{% endif %}">
+            <i class="fas fa-user-shield"></i> Користувачі
+        </a>
+    {% endif %}
+</div>
+        <div class="mt-auto border-top border-secondary pt-3">
+            <a href="{% url 'logout' %}" class="nav-link text-danger">
+                <i class="fas fa-power-off"></i> Вийти
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="top-bar">
+        <h4 class="mb-0">Електронний кабінет</h4>
+        <div class="user-info d-flex align-items-center">
+            <span class="me-3">Вітаємо, <strong>{{ user.username }}</strong></span>
+            <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=6a0dad&color=fff" class="rounded-circle" width="35" alt="Avatar">
+        </div>
+    </div>
+
+    {% block cabinet_content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

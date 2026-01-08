@@ -1,0 +1,52 @@
+{% extends "accounts/cabinet.html" %}
+
+{% block cabinet_content %}
+<div class="container" style="max-width: 600px;">
+    <div class="card card-stats p-4">
+        <h3 class="mb-4">
+            <i class="fas fa-file-signature me-2 text-violet"></i> 
+            {% if instance %}Редагування{% else %}Новий{% endif %} договір
+        </h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label text-muted">Номер договору</label>
+                <input type="text" name="number" class="form-control" value="{{ instance.number|default:'' }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted">Дата підписання</label>
+                <input type="date" name="date" class="form-control" value="{{ instance.date|date:'Y-m-d' }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-muted">Контрагент</label>
+                <select name="contragent" class="form-select" required>
+                    <option value="" disabled {% if not instance %}selected{% endif %}>Оберіть компанію...</option>
+                    {% for c in contragents %}
+                        <option value="{{ c.id }}" {% if instance.contragent.id == c.id %}selected{% endif %}>
+                            {{ c.name }} ({{ c.edrpou }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-muted">Скан-копія договору (PDF або зображення)</label>
+                <input type="file" name="file" class="form-control">
+                {% if instance.file %}
+                    <div class="mt-2">
+                        <small class="text-success">
+                            <i class="fas fa-check-circle"></i> Файл уже завантажено: 
+                            <a href="{{ instance.file.url }}" target="_blank" class="text-violet fw-bold">Переглянути</a>
+                        </small>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'agreements' %}" class="btn btn-light">Скасувати</a>
+                <button type="submit" class="btn btn-violet" style="background-color: var(--violet); color: white;">Зберегти</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

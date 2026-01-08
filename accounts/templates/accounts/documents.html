@@ -1,0 +1,53 @@
+{% extends "accounts/cabinet.html" %}
+
+{% block cabinet_content %}
+<div class="mb-4">
+    <h3><i class="fas fa-folder-open me-2 text-violet"></i> Архів документів</h3>
+    <p class="text-muted">Тут зібрані всі завантажені скан-копії договорів.</p>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="fas fa-folder-open me-2 text-violet"></i> Архів документів</h3>
+    <a href="{% url 'upload_document' %}" class="btn btn-violet" style="background-color: var(--violet); color: white;">
+        <i class="fas fa-plus me-2"></i> Завантажити документ
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4 p-3" style="border-radius: 15px;">
+    <form method="GET" class="d-flex gap-2">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+            <input type="text" name="q" class="form-control border-start-0" placeholder="Пошук за номером або компанією..." value="{{ query|default:'' }}">
+        </div>
+        <button type="submit" class="btn btn-violet" style="background-color: var(--violet); color: white;">Знайти</button>
+        {% if query %}
+            <a href="{% url 'documents' %}" class="btn btn-light">Скинути</a>
+        {% endif %}
+    </form>
+</div>
+<div class="row">
+    {% for doc in documents %}
+    <div class="col-md-4 mb-4">
+        <div class="card card-stats h-100 shadow-sm border-0">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-file-alt fa-2x text-violet me-3"></i>
+                    <h5 class="card-title mb-0">Договір №{{ doc.number }}</h5>
+                </div>
+                <p class="card-text small text-muted">
+                    <strong>Контрагент:</strong> {{ doc.contragent.name }}<br>
+                    <strong>Дата:</strong> {{ doc.date|date:"d.m.Y" }}
+                </p>
+                <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-violet w-100" style="background-color: var(--violet); color: white;">
+                    <i class="fas fa-download me-2"></i> Відкрити файл
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+        <p class="text-muted">Жодного документа ще не завантажено.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

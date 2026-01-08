@@ -1,0 +1,57 @@
+{% extends "accounts/cabinet.html" %}
+
+{% block cabinet_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="fas fa-file-contract me-2"></i> Договори</h3>
+    <a href="{% url 'add_agreement' %}" class="btn btn-violet" style="background-color: var(--violet); color: white;">
+        <i class="fas fa-plus me-2"></i> Додати договір
+    </a>
+</div>
+
+<div class="card card-stats p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead style="background-color: rgba(106, 13, 173, 0.05);">
+                <tr>
+                    <th class="ps-4">№ Договору</th>
+                    <th>Дата</th>
+                    <th>Контрагент</th>
+                    <th>Документ</th> <th class="text-end pe-4">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in agreements %}
+                <tr>
+                    <td class="ps-4"><strong>{{ item.number }}</strong></td>
+                    <td>{{ item.date|date:"d.m.Y" }}</td>
+                    <td><span class="badge bg-light text-dark border">{{ item.contragent.name }}</span></td>
+                    <td>
+                        {% if item.file %}
+                            <a href="{{ item.file.url }}" target="_blank" class="text-decoration-none" style="color: var(--violet);">
+                                <i class="fas fa-file-pdf me-1"></i> Відкрити
+                            </a>
+                        {% else %}
+                            <span class="text-muted small">Відсутній</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end pe-4">
+                        <a href="{% url 'edit_agreement' item.id %}" class="btn btn-sm btn-violet-outline me-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'delete_agreement' item.id %}" 
+                           class="btn btn-sm btn-outline-danger" 
+                           onclick="return confirm('Видалити договір №{{ item.number }}?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-5 text-muted">Договорів поки немає.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

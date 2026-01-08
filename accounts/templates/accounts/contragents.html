@@ -1,0 +1,54 @@
+{% extends "accounts/cabinet.html" %}
+
+{% block cabinet_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="fas fa-building me-2"></i> Контрагенти</h3>
+    <a href="{% url 'add_contragent' %}" class="btn btn-violet" style="background-color: var(--violet); color: white;">
+        <i class="fas fa-plus me-2"></i> Додати контрагента
+    </a>
+</div>
+
+<div class="card card-stats p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead style="background-color: rgba(106, 13, 173, 0.05);">
+                <tr>
+                    <th class="ps-4">ID</th>
+                    <th>Назва компанії</th>
+                    <th>ЄДРПОУ</th>
+                    <th>Менеджер</th>
+                    <th class="text-end pe-4">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in contragents %}
+                <tr>
+                    <td class="ps-4 text-muted">{{ item.id }}</td>
+                    <td><strong>{{ item.name }}</strong></td>
+                    <td><span class="badge bg-light text-dark border">{{ item.edrpou }}</span></td>
+                    <td>{{ item.manager }}</td>
+                    <td class="text-end pe-4">
+                        <a href="{% url 'edit_contragent' item.id %}" class="btn btn-sm btn-violet-outline me-2" title="Редагувати">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'delete_contragent' item.id %}" 
+                           class="btn btn-sm btn-outline-danger" 
+                           onclick="return confirm('Видалити компанію {{ item.name }}?')"
+                           title="Видалити">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-5 text-muted">
+                        Контрагентів ще не додано. <br>
+                        <a href="{% url 'add_contragent' %}" class="alert-link">Додайте першого</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

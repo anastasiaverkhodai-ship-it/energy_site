@@ -1,0 +1,69 @@
+{% extends "accounts/cabinet.html" %}
+
+{% block cabinet_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3><i class="fas fa-users-cog me-2"></i> Управління користувачами</h3>
+   <a href="{% url 'add_user' %}" class="btn btn-violet" style="background-color: var(--violet); color: white;">
+    <i class="fas fa-plus me-2"></i> Додати користувача
+</a>
+</div>
+
+<div class="card card-stats p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead style="background-color: rgba(106, 13, 173, 0.05);">
+                <tr>
+                    <th class="ps-4">ID</th>
+                    <th>Логін (Username)</th>
+                    <th>Ім'я та Прізвище</th>
+                    <th>Email</th>
+                    <th>Статус</th>
+                    <th class="text-end pe-4">Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td class="ps-4 text-muted">{{ u.id }}</td>
+                    <td><strong>{{ u.username }}</strong></td>
+                    <td>{{ u.first_name }} {{ u.last_name }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>
+                        {% if u.is_staff %}
+                            <span class="badge bg-primary">Адміністратор</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Клієнт</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end pe-4">
+                        <a href="{% url 'edit_user' u.id %}" class="btn btn-sm btn-violet-outline me-2" title="Редагувати">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        {% if u.id != user.id %} 
+                        <a href="{% url 'delete_user' u.id %}" 
+                           class="btn btn-sm btn-outline-danger" 
+                           onclick="return confirm('Ви впевнені, що хочете видалити користувача {{ u.username }}?')"
+                           title="Видалити">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4">Користувачів ще немає</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-4 p-3 bg-light rounded border">
+    <small class="text-muted">
+        <i class="fas fa-info-circle me-1"></i> 
+        Ви бачите цей список, тому що у вас є права адміністратора. Всі дії (редагування та видалення) відбуваються безпосередньо в системі керування сайтом.
+    </small>
+</div>
+{% endblock %}
