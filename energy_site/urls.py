@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.contrib.sitemaps import views as sitemap_views
-from . import views
 
 from main import views as main_views
 from accounts import views as accounts_views
@@ -69,10 +68,12 @@ urlpatterns = [
     path("cabinet/users/edit/<int:user_id>/", accounts_views.edit_user_view, name="edit_user"),
     path("cabinet/users/delete/<int:user_id>/", accounts_views.delete_user_view, name="delete_user"),
 
-    # API
+   # API
     path("api/auth/register/", accounts_views.api_register, name="api_register"),
     path("api/users/me/", accounts_views.api_me, name="api_me"),
-    path('documents/delete/<int:doc_id>/', views.delete_document_view, name='delete_document'),
+    
+    # ВИПРАВЛЕНО ТУТ: замість views пишемо accounts_views
+    path('cabinet/documents/delete/<int:doc_id>/', accounts_views.delete_document_view, name='delete_document'),
 ]
 
 if settings.DEBUG:
