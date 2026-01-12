@@ -56,6 +56,14 @@ class Document(models.Model):
         choices=DOCUMENT_TYPES, 
         default='Інше'
     )
+    contragent = models.ForeignKey(
+        Contragent, 
+        on_delete=models.CASCADE, 
+        related_name='documents', 
+        verbose_name="Контрагент",
+        null=True, 
+        blank=True
+    )
     file = models.FileField("Файл", upload_to='documents/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

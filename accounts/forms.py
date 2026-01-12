@@ -24,21 +24,16 @@ class UserRegisterForm(forms.ModelForm):
         return confirm_password
 
 # НОВА ФОРМА ДЛЯ ЗАВАНТАЖЕННЯ ДОКУМЕНТІВ
+# accounts/forms.py
 class DocumentUploadForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ['title', 'document_type', 'file']
+        fields = ['title', 'document_type', 'contragent', 'file']
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control', 
-                'placeholder': 'Наприклад: Договір оренди №123'
-            }),
-            'document_type': forms.Select(attrs={
-                'class': 'form-select'  # Стиль Bootstrap для списку
-            }),
-            'file': forms.FileInput(attrs={
-                'class': 'form-control'
-            }),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введіть назву (напр. Рахунок №45)'}),
+            'document_type': forms.Select(attrs={'class': 'form-select'}),
+            'contragent': forms.Select(attrs={'class': 'form-select'}),
+            'file': forms.FileInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'title': 'Назва документа',
