@@ -291,3 +291,14 @@ def api_me(request):
         "username": request.user.username,
         "email": request.user.email
     })
+@login_required
+def delete_document_view(request, doc_id):
+    """Видалення документа"""
+    if not request.user.is_staff:
+        messages.error(request, "У вас немає прав для видалення!")
+        return redirect('documents')
+    
+    document = get_object_or_404(Document, id=doc_id)
+    document.delete()
+    messages.success(request, f"Документ '{document.title}' видалено.")
+    return redirect('documents')

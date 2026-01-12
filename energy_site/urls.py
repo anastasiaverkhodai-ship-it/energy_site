@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.contrib.sitemaps import views as sitemap_views
+from . import views
 
 from main import views as main_views
 from accounts import views as accounts_views
@@ -71,6 +72,7 @@ urlpatterns = [
     # API
     path("api/auth/register/", accounts_views.api_register, name="api_register"),
     path("api/users/me/", accounts_views.api_me, name="api_me"),
+    path('documents/delete/<int:doc_id>/', views.delete_document_view, name='delete_document'),
 ]
 
 if settings.DEBUG:
