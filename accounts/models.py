@@ -1,3 +1,5 @@
+import os
+from django.utils.text import slugify
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -78,3 +80,16 @@ class TariffDocument(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.year})"
+    
+    # Функція для зміни назви файлу
+def upload_to_path(instance, filename):
+    name, ext = os.path.splitext(filename)
+    # slugify перетворить назву на латиницю, якщо налаштовано правильно, 
+    # або ми просто можемо дати файлу унікальний ID
+    new_filename = f"doc_{instance.pk if instance.pk else 'new'}_{slugify(name)}{ext}"
+    return os.path.join('documents/', new_filename)
+
+class Document(models.Model):
+    # ... ваші поля ...
+    # Змініть поле file, щоб воно використовувало функцію вище
+    file = models.FileField("Файл", upload_to=upload_to_path, blank=True, null=True)
