@@ -2,43 +2,41 @@
 
 {% block cabinet_content %}
 <div class="container" style="max-width: 600px;">
-    <div class="card card-stats p-4 shadow-sm border-0">
+    <div class="card card-stats p-4 shadow-sm border-0" style="border-radius: 15px;">
         <h3 class="mb-4 text-violet">
             <i class="fas fa-file-upload me-2"></i> Завантажити документ
         </h3>
         
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            
             <div class="mb-3">
-                <label class="form-label text-muted">Оберіть файл (PDF, Scan)</label>
-                <input type="file" name="file" class="form-control" required>
+                <label class="form-label text-muted">Назва документа</label>
+                {{ form.title }}
+                <small class="text-muted">Наприклад: Договір №123 або Рахунок за січень</small>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-muted">Тип документу</label>
+                {{ form.document_type }}
             </div>
             
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label text-muted">№ Договору</label>
-                    <input type="text" name="number" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label text-muted">Дата підписання</label>
-                    <input type="date" name="date" class="form-control" required>
-                </div>
+            <div class="mb-3">
+                <label class="form-label text-muted">Оберіть файл (PDF, PNG, JPG)</label>
+                {{ form.file }}
             </div>
 
+            {% if form.contragent %}
             <div class="mb-3">
                 <label class="form-label text-muted">Контрагент (Власник документа)</label>
-                <select name="contragent" class="form-select" required>
-                    <option value="" selected disabled>Оберіть компанію...</option>
-                    {% for c in contragents %}
-                        <option value="{{ c.id }}">{{ c.name }}</option>
-                    {% endfor %}
-                </select>
+                {{ form.contragent }}
             </div>
+            {% endif %}
 
             <div class="d-flex justify-content-between mt-4">
-                <a href="{% url 'documents' %}" class="btn btn-light">Скасувати</a>
-                <button type="submit" class="btn btn-violet" style="background-color: var(--violet); color: white;">
-                    Зберегти в архів
+                <a href="{% url 'documents' %}" class="btn btn-light" style="border-radius: 10px;">Скасувати</a>
+                <button type="submit" class="btn btn-violet" style="background-color: var(--violet); color: white; border-radius: 10px;">
+                    <i class="fas fa-save me-2"></i> Зберегти в архів
                 </button>
             </div>
         </form>

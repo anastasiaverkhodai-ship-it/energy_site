@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.db.models import Q
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from .forms import UserRegisterForm, DocumentUploadForm 
+from .models import Contragent, Agreement, Document
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -86,42 +88,44 @@ def profile_view(request):
 
 @login_required
 def documents_list(request):
-    if request.user.is_staff:
-        # Адмін бачить ВСЕ
-        documents = Agreement.objects.exclude(file='')
-    else:
-        # Клієнт бачить документи ТІЛЬКИ своєї компанії
-        # Перевіряємо, чи взагалі у юзера є прив'язаний контрагент
-        if hasattr(request.user, 'contragent'):
-            documents = Agreement.objects.filter(contragent=request.user.contragent).exclude(file='')
-        else:
-            documents = Agreement.objects.none()  # Порожній список, якщо не прив'язаний
+    """Відображення реєстру документів (нова модель Document)"""
+    query = request.GET.get('q')
     
-    return render(request, 'accounts/documents.html', {'documents': documents})
+    # Фільтрація: адмін бачить все, користувач — теж (або за логікою компанії)
+    if request.user.is_staff:
+        documents = Document.objects.all().order_by('-id')
+    else:
+        # Якщо у моделі Document з'явиться поле contragent/user, фільтруй тут
+        documents = Document.objects.all().order_by('-id')
+    
+    if query:
+        documents = documents.filter(
+            Q(title__icontains=query) | Q(document_type__icontains=query)
+        )
+    
+    return render(request, 'accounts/documents.html', {
+        'documents': documents, 
+        'query': query
+    })
+
 @login_required
 def upload_document_view(request):
-    """Дозволяє завантажувати скан-копії до бази"""
-    # Тільки персонал може додавати документи (можна змінити для клієнтів)
+    """Завантаження через DocumentUploadForm з вибором типу"""
     if not request.user.is_staff:
+        messages.error(request, "У вас немає прав для завантаження документів.")
         return redirect('cabinet')
         
-    contragents = Contragent.objects.all()
     if request.method == 'POST':
-        number = request.POST.get('number')
-        date = request.POST.get('date')
-        contragent_id = request.POST.get('contragent')
-        uploaded_file = request.FILES.get('file')
+        # Передаємо POST дані та ФАЙЛИ у форму
+        form = DocumentUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Документ успішно додано до архіву!')
+            return redirect('documents')
+    else:
+        form = DocumentUploadForm()
         
-        contragent = get_object_or_404(Contragent, id=contragent_id)
-        Agreement.objects.create(
-            number=number,
-            date=date,
-            contragent=contragent,
-            file=uploaded_file
-        )
-        messages.success(request, 'Документ успішно додано!')
-        return redirect('documents')
-    return render(request, 'accounts/upload_document.html', {'contragents': contragents})
+    return render(request, 'accounts/upload_document.html', {'form': form})
 
 # ==========================================
 # УПРАВЛІННЯ КОНТРАГЕНТАМИ ТА ДОГОВОРАМИ (Тільки Адмін)
