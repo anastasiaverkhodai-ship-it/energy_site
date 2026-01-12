@@ -28,7 +28,7 @@ urlpatterns = [
     path("contacts/", main_views.contacts, name="contacts"),
     path("about/", main_views.about, name="about"),
     path("why/", main_views.why, name="why"),
-    path("how/", main_views.how, name="how"),
+    path("HowItWorks/", main_views.how), # Додатковий шлях для перестраховки
     path("documentation/", main_views.documentation, name="documentation"),
     path("consumer/", main_views.consumer, name="consumer"),
     path("contract_docs/", main_views.contract_docs, name="contract_docs"),
