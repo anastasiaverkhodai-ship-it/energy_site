@@ -80,13 +80,14 @@ body {
   color: var(--highlight);
 }
 
-.text-link {
-  color: #0d6efd; /* bootstrap-синій */
+.text-link-black {
+  color: #000;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.text-link:hover {
-  color: #084298;
+.text-link-black:hover {
+  color: #555; /* легке посвітління */
   cursor: pointer;
 }
+
