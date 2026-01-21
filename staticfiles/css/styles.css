@@ -80,14 +80,4 @@ body {
   color: var(--highlight);
 }
 
-.text-link-black {
-  color: #000;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.text-link-black:hover {
-  color: #555; /* легке посвітління */
-  cursor: pointer;
-}
 
