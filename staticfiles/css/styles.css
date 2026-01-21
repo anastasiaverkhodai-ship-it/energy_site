@@ -79,3 +79,14 @@ body {
 .notice-box strong{
   color: var(--highlight);
 }
+
+.text-link {
+  color: #0d6efd; /* bootstrap-синій */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.text-link:hover {
+  color: #084298;
+  cursor: pointer;
+}
