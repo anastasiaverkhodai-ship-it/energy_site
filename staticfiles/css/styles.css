@@ -80,4 +80,26 @@ body {
   color: var(--highlight);
 }
 
+.text-link-black {
+  color: #000 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
 
+.text-link-black:hover {
+  color: #555 !important; /* легке посвітління при наведенні */
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.text-link-black {
+  color: #000 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+
+.text-link-black:hover {
+  color: #555 !important; /* легке посвітління при наведенні */
+  cursor: pointer;
+  text-decoration: none !important;
+}
